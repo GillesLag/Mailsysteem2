@@ -26,7 +26,47 @@ namespace Mailsysteem_DAL
             return result;
         }
 
-        public static string OphalenVerzender(int verzenderId)
+        public static List<Bericht> OphalenBerichten(int gebruikerId)
+        {
+            Start();
+            Dictionary<int, Bericht> opslagBoek = new Dictionary<int, Bericht>();
+
+            List<Bericht> result = _db.Connectie.Query<Bericht, Gebruiker, BerichtOntvanger, Gebruiker, Bericht>($@"SELECT b.*, g.*, bo.*, og.*
+                                    FROM Mailsysteem.Bericht AS b INNER JOIN Mailsysteem.Gebruiker AS g ON b.verzenderId = g.id
+                                    INNER JOIN Mailsysteem.BerichtOntvanger AS bo ON bo.berichtId = b.id
+                                    INNER JOIN Mailsysteem.Gebruiker AS og ON bo.gebruikerId = og.id
+                                    WHERE b.verzenderId = {gebruikerId} OR b.id IN (
+										SELECT berichtId
+										FROM Mailsysteem.BerichtOntvanger
+										WHERE gebruikerId = {gebruikerId}
+									)", (b, g, bo, og) =>
+            {
+                Bericht bericht;
+                if (!opslagBoek.TryGetValue(b.id, out bericht))
+                {
+                    bericht = b;
+                    if (bericht.Gebruiker == null)
+                        bericht.Gebruiker = g;
+
+                    if (bericht.BerichtOntvanger == null)
+                        bericht.BerichtOntvanger = new List<BerichtOntvanger>();
+
+                    opslagBoek.Add(bericht.id, bericht);
+                }
+
+                bo.Gebruiker = og;
+                bericht.BerichtOntvanger.Add(bo);
+
+                return bericht;
+
+            }, splitOn: "id").Distinct().ToList();
+
+            _db.Close();
+
+            return result;
+        }
+
+        /*public static string OphalenVerzender(int verzenderId)
         {
             Start();
             string result = _db.Connectie.QueryFirst<Gebruiker>("SELECT * FROM Mailsysteem.Gebruiker" +
@@ -35,115 +75,8 @@ namespace Mailsysteem_DAL
             _db.Close();
 
             return result;
-        }
+        }*/
 
-        public static List<Bericht> OphalenOntvangenBerichten(int gebruikerId)
-        {
-            Start();
-            Dictionary<int, Bericht> opslagBoek = new Dictionary<int, Bericht>();
-
-            List<Bericht> result = _db.Connectie.Query<Bericht, BerichtOntvanger, Gebruiker, Bericht>("SELECT b.*, bo.*, g.*" +
-                " FROM Mailsysteem.Bericht AS b INNER JOIN Mailsysteem.BerichtOntvanger AS bo ON b.id = bo.berichtId" +
-                " INNER JOIN Mailsysteem.Gebruiker AS g ON b.verzenderId = g.id" +
-                " WHERE bo.gebruikerId = @gebruikerId", (b, bo, g) =>
-                {
-                    Bericht bericht;
-                    if (!opslagBoek.TryGetValue(b.id, out bericht))
-                    {
-                        bericht = b;
-                        if (bericht.Gebruiker == null)
-                            bericht.Gebruiker = g;
-
-                        if (bericht.BerichtOntvanger == null)
-                            bericht.BerichtOntvanger = new List<BerichtOntvanger>();
-
-                        opslagBoek.Add(bericht.id, bericht);
-                    }
-
-                    bericht.BerichtOntvanger.Add(bo);
-
-                    return bericht;
-
-                }, param: new {gebruikerId = gebruikerId}, splitOn: "id").Distinct().ToList();
-
-            _db.Close();
-
-            return result;
-        }
-
-        public static List<Bericht> OphalenVerzondenBerichten(int gebruikerId)
-        {
-            Start();
-
-            List<Bericht> result = _db.Connectie.Query<Bericht>($"SELECT * FROM Mailsysteem.Bericht" +
-                $" WHERE verzenderId = {gebruikerId}").Distinct().ToList();
-
-            _db.Close();
-
-            return result;
-        }
-
-        public static List<Gebruiker> OphalenOntvangers (int berichtId)
-        {
-            Start();
-            Dictionary<int, Gebruiker> opslagBoek = new Dictionary<int, Gebruiker>();
-
-            List<Gebruiker> result = _db.Connectie.Query<Gebruiker, BerichtOntvanger, Gebruiker>($"SELECT g.*, bo.*" +
-                $" FROM Mailsysteem.Gebruiker AS g INNER JOIN Mailsysteem.BerichtOntvanger AS bo ON g.id = bo.gebruikerId" +
-                $" WHERE bo.berichtId = {berichtId} AND bo.isCC = 0", (g, bo) =>
-                {
-                    Gebruiker gebruiker;
-                    if (!opslagBoek.TryGetValue(g.id, out gebruiker))
-                    {
-                        gebruiker = g;
-
-                        if (gebruiker.BerichtOntvanger == null)
-                            gebruiker.BerichtOntvanger = new List<BerichtOntvanger>();
-
-                        opslagBoek.Add(gebruiker.id, gebruiker);
-                    }
-
-                    gebruiker.BerichtOntvanger.Add(bo);
-
-                    return gebruiker;
-
-                }, splitOn: "id").Distinct().ToList();
-
-            _db.Close();
-
-            return result;
-        }
-
-        public static List<Gebruiker> OphalenOntvangersCC(int berichtId)
-        {
-            Start();
-            Dictionary<int, Gebruiker> opslagBoek = new Dictionary<int, Gebruiker>();
-
-            List<Gebruiker> result = _db.Connectie.Query<Gebruiker, BerichtOntvanger, Gebruiker>($"SELECT g.*, bo.*" +
-                $" FROM Mailsysteem.Gebruiker AS g INNER JOIN Mailsysteem.BerichtOntvanger AS bo ON g.id = bo.gebruikerId" +
-                $" WHERE bo.berichtId = {berichtId} AND bo.isCC = 1", (g, bo) =>
-                {
-                    Gebruiker gebruiker;
-                    if (!opslagBoek.TryGetValue(g.id, out gebruiker))
-                    {
-                        gebruiker = g;
-
-                        if (gebruiker.BerichtOntvanger == null)
-                            gebruiker.BerichtOntvanger = new List<BerichtOntvanger>();
-
-                        opslagBoek.Add(gebruiker.id, gebruiker);
-                    }
-
-                    gebruiker.BerichtOntvanger.Add(bo);
-
-                    return gebruiker;
-
-                }, splitOn: "id").Distinct().ToList();
-
-            _db.Close();
-
-            return result;
-        }
 
         public static List<Taak> OphalenTaken(int gebruikerId)
         {
@@ -459,6 +392,27 @@ namespace Mailsysteem_DAL
             var parameters = new
             {
                 @id = taak.id
+            };
+
+            Start();
+
+            int affectedRows = _db.Connectie.Execute(sql, parameters);
+
+            _db.Close();
+
+            if (affectedRows == 0)
+                return false;
+
+            return true;
+        }
+
+        public static bool DeleteMail(Bericht bericht)
+        {
+            string sql = $@"DELETE FROM Mailsysteem.Bericht WHERE id = @id";
+
+            var parameters = new
+            {
+                @id = bericht.id
             };
 
             Start();

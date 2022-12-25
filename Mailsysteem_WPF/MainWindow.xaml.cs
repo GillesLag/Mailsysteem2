@@ -33,8 +33,7 @@ namespace Mailsysteem_WPF
 
             GebruikerList = DatabaseOperations.OphalenGebruikers();
             gebruiker = GebruikerList[keuzeGebruiker];
-            OphalenOntvangenBerichten();
-            OphalenVerzondenBerichten();
+            ophalenBerichten();
             lbMailItems.DataContext = MailItemsOntvangen;
         }
 
@@ -50,32 +49,42 @@ namespace Mailsysteem_WPF
             item.IsSelected = true;
             if (lbMailItems.SelectedItem is Bericht bericht)
             {
-                MessageBox.Show("test");
+                if (!DatabaseOperations.DeleteMail(bericht))
+                    MessageBox.Show("Bericht kon niet verwijderd worden!");
             }
 
         }
 
         private void lbMailItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Bericht b = lbMailItems.SelectedItem as Bericht;
-            string ontvangers = "";
-            string cc = "";
-            DatabaseOperations.OphalenOntvangers(b.id).ForEach(x => ontvangers += x.email + "; ");
-            DatabaseOperations.OphalenOntvangersCC(b.id).ForEach(x => cc += x.email + "; ");
-
-            lblOntvangers.Content = ontvangers;
-            lblCcOntvangers.Content = cc;
-            lblOnderwerpTekst.Content = b.onderwerp;
-            tbBerichtBody.Text = b.berichtTekst;
-
-            if (b.verzenderId != null)
+            if (lbMailItems.SelectedItem is Bericht bericht)
             {
-                lblGebruiker.Content = DatabaseOperations.OphalenVerzender(b.verzenderId.Value);
-            }
+                string ontvangers = "";
+                string cc = "";
 
-            else
-            {
-                lblGebruiker.Content = "Gebuiker bestaat niet meer";
+                foreach (BerichtOntvanger bo in bericht.BerichtOntvanger)
+                {
+                    if (bo.isCC)
+                        cc += bo.Gebruiker.email + "; ";
+
+                    else
+                        ontvangers += bo.Gebruiker.email + "; ";
+                }
+
+                lblOntvangers.Content = ontvangers;
+                lblCcOntvangers.Content = cc;
+                lblOnderwerpTekst.Content = bericht.onderwerp;
+                tbBerichtBody.Text = bericht.berichtTekst;
+
+                if (bericht.verzenderId != null)
+                {
+                    lblGebruiker.Content = bericht.Gebruiker.email;
+                }
+
+                else
+                {
+                    lblGebruiker.Content = "Gebuiker bestaat niet meer";
+                }
             }
         }
 
@@ -94,8 +103,7 @@ namespace Mailsysteem_WPF
             NieuweMail nieuweMail = new NieuweMail(gebruiker);
             nieuweMail.ShowDialog();
 
-            OphalenOntvangenBerichten();
-            OphalenVerzondenBerichten();
+            ophalenBerichten();
         }
 
         private void btnBeantwoorden_Click(object sender, RoutedEventArgs e)
@@ -111,8 +119,7 @@ namespace Mailsysteem_WPF
             NieuweMail nieuweMail = new NieuweMail(gebruiker, lblOnderwerpTekst.Content.ToString(), volledigeBody, lblGebruiker.Content.ToString());
             nieuweMail.ShowDialog();
 
-            OphalenOntvangenBerichten();
-            OphalenVerzondenBerichten();
+            ophalenBerichten();
         }
 
         private void btnAllenBeantwoorden_Click(object sender, RoutedEventArgs e)
@@ -128,8 +135,7 @@ namespace Mailsysteem_WPF
             NieuweMail nieuweMail = new NieuweMail(gebruiker, lblOnderwerpTekst.Content.ToString(), volledigeBody, lblGebruiker.Content.ToString(), lblOntvangers.Content.ToString(), lblCcOntvangers.Content.ToString());
             nieuweMail.ShowDialog();
 
-            OphalenOntvangenBerichten();
-            OphalenVerzondenBerichten();
+            ophalenBerichten();
         }
 
         private void btnDoorsturen_Click(object sender, RoutedEventArgs e)
@@ -145,28 +151,24 @@ namespace Mailsysteem_WPF
             NieuweMail nieuweMail = new NieuweMail(gebruiker, lblOnderwerpTekst.Content.ToString(), volledigeBody);
             nieuweMail.ShowDialog();
 
-            OphalenOntvangenBerichten();
-            OphalenVerzondenBerichten();
+            ophalenBerichten();
         }
 
-        private void OphalenOntvangenBerichten()
+        private void ophalenBerichten()
         {
-            DatabaseOperations.OphalenOntvangenBerichten(gebruiker.id).ForEach(x =>
+            DatabaseOperations.OphalenBerichten(gebruiker.id).ForEach(x =>
             {
-                if (!MailItemsOntvangen.Contains(x))
+                if (x.verzenderId == gebruiker.id)
                 {
-                    MailItemsOntvangen.Add(x);
+                    if (!MailItemsVerzonden.Contains(x))
+                        MailItemsVerzonden.Add(x);
                 }
-            });
-        }
 
-        private void OphalenVerzondenBerichten()
-        {
-            DatabaseOperations.OphalenVerzondenBerichten(gebruiker.id).ForEach(x =>
-            {
-                x.Gebruiker = gebruiker;
-                if (!MailItemsVerzonden.Contains(x))
-                    MailItemsVerzonden.Add(x);
+                else
+                {
+                    if (!MailItemsOntvangen.Contains(x))
+                        MailItemsOntvangen.Add(x);
+                }
             });
         }
 
