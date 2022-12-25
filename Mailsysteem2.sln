@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mailsysteem_WPF", "Mailsysteem_WPF\Mailsysteem_WPF.csproj", "{4F63CA08-C716-4944-BC10-5A353551574E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mailsysteem_DAL", "Mailsysteem_DAL\Mailsysteem_DAL.csproj", "{50913563-5FF5-43A8-8CD9-F6DF34F59F47}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4F63CA08-C716-4944-BC10-5A353551574E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F63CA08-C716-4944-BC10-5A353551574E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F63CA08-C716-4944-BC10-5A353551574E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F63CA08-C716-4944-BC10-5A353551574E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50913563-5FF5-43A8-8CD9-F6DF34F59F47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50913563-5FF5-43A8-8CD9-F6DF34F59F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50913563-5FF5-43A8-8CD9-F6DF34F59F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50913563-5FF5-43A8-8CD9-F6DF34F59F47}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3170759-1B97-4BFB-A9C1-EA5F507EF78C}
+	EndGlobalSection
+EndGlobal

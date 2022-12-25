@@ -1,0 +1,114 @@
+﻿<Window x:Class="Mailsysteem_WPF.Taken"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Mailsysteem_WPF"
+        mc:Ignorable="d"
+        Title="Taken" Height="800" Width="1500">
+    
+    <Window.Resources>
+        <DataTemplate x:Key="TaakItems" >
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                    <TextBlock Text="{Binding Path=naam}" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Path=TaakTekst}" FontSize="12"/>
+                </StackPanel>
+                <Button x:Name="btnKlaar" Content="Klaar" Height="30"
+                        Click="btnKlaar_Click" HorizontalAlignment="Right" Margin="10,0,0,0"/>
+                <Button x:Name="btnDelete" Content="Delete" Height="30"
+                        Click="btnDelete_Click" HorizontalAlignment="Right" Margin="10,0,0,0"/>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+
+    <!--LinkerBalk-->
+    <Border BorderThickness="1" BorderBrush="Black" Margin="5">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="1" BorderThickness="1" BorderBrush="Black"></Border>
+
+            <StackPanel Grid.Column="0" Margin="10,100">
+                <Button x:Name="btnMails" Content="Mails" Height="30" Margin="0,0,0,10" Click="btnMails_Click"/>
+                <Button x:Name="btnVergaderingen" Content="Vergaderingen" Height="30" Margin="0,0,0,10" Click="btnVergaderingen_Click"/>
+                <Button x:Name="btnTaken" Content="Taken" Height="30" Margin="0,0,0,10"/>
+            </StackPanel>
+
+            <!--BovensteBalk-->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black"></Border>
+
+                <Button x:Name="btnNieuweTaak" Content="Nieuwe Taak" Grid.Row="0" Height="30" HorizontalAlignment="Left" Width="100" Margin="20,0,0,0" Click="btnNieuweTaak_Click"/>
+
+                <!--Folders en taakitems -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" BorderThickness="1" BorderBrush="Black"></Border>
+                    <Border Grid.Column="1" BorderThickness="1" BorderBrush="Black"></Border>
+                    <Border Grid.Column="2" BorderThickness="1" BorderBrush="Black"></Border>
+
+                    <StackPanel Grid.Column="0" Margin="10">
+                        <Button x:Name="btnTakenInbox" Content="Taken" Margin="0,0,0,10" Click="btnTaken_Click"/>
+                        <Button x:Name="btnAfgerond" Content="Taken afgerond" Margin="0,0,0,10" Click="btnAfgerond_Click"/>
+                    </StackPanel>
+
+                    <ListBox x:Name="lbTaakItems" Grid.Column="1"
+                             IsSynchronizedWithCurrentItem="True"
+                             ItemsSource="{Binding}"
+                             ItemTemplate="{StaticResource TaakItems}"
+                             SelectionChanged="lbMailItems_SelectionChanged"/>
+
+                    <!--Taak-->
+                    <Grid Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="0.3*" MinWidth="120"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Margin="10" Grid.Column="0">
+                                <StackPanel Orientation="Horizontal" >
+                                    <Label Name="lblTitle" Content="Titel:" Width="80" HorizontalContentAlignment="Right"/>
+                                    <Label Name="lblTaakNaam" Content="voorbeeld"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" >
+                                    <Label Name="lblEindDatum" Content="Einddatum:" Width="80" HorizontalContentAlignment="Right"/>
+                                    <Label Name="lblEindDatumTekst" Content="voorbeeld" VerticalContentAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" >
+                                    <Label Name="lblCategorie" Content="Categorie:" Width="80" HorizontalContentAlignment="Right"/>
+                                    <Label Name="lblCategorieën" Content="voorbeeld" VerticalContentAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <Button Grid.Column="1" Margin="20" Name="btnKlaar" Content="Klaar" Click="btnKlaar_Click"/>
+                        </Grid>
+
+                        <TextBlock Name="tbTaakBody" Grid.Row="1" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Text="testsetstsetsetest" Margin="20"/>
+                        <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black"></Border>
+
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,49 @@
+﻿<Window x:Class="Mailsysteem_WPF.NieuweTaak"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Mailsysteem_WPF"
+        mc:Ignorable="d"
+        Title="NieuweTaak" Height="450" Width="800">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="180"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black"></Border>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Name="btnAanmaken" Content="Aanmaken" Grid.Column="0" Width="80" Height="80" Click="btnAanmaken_Click"/>
+
+            <StackPanel Grid.Column="1" Margin="0,50,0,0">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <Label Name="lblTitel" Content="Titel:" HorizontalContentAlignment="Right" Width="125"/>
+                    <TextBox x:Name="tbTitelTekst" Text="Titel" VerticalContentAlignment="Center" Width="500" Height="20"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <Label Name="lblcategorie" Content="categorie:" HorizontalContentAlignment="Right" Width="125"/>
+                    <Button Name="btnCategorieToevoegen" Content="Categorie Toevoegen" Click="btnCategorieToevoegen_Click"/>
+                    <Label x:Name="lblCategorieën" Content="rood" VerticalContentAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Name="lblEindDatum" Content="EindDatum:" HorizontalContentAlignment="Right" Width="125"/>
+                    <DatePicker x:Name="dpEindDatum" VerticalContentAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Name="lblHerinneringDatum" Content="HerinneringDatum:" HorizontalContentAlignment="Right" Width="125"/>
+                    <DatePicker x:Name="dpHerinneringDatum" VerticalContentAlignment="Center" Height="25"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <TextBox x:Name="tbTaakBody" Grid.Row="1" Text="testetstetsetestestsetset" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="20"/>
+    </Grid>
+</Window>

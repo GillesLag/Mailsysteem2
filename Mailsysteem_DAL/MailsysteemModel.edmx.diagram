@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="656fd01fd5a54cf6a9b16c14e01fdc2d" Name="Diagram1">
+        <EntityTypeShape EntityType="MailsysteemModel.Bericht" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MailsysteemModel.BerichtOntvanger" Width="1.5" PointX="7.5" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MailsysteemModel.Categorie" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MailsysteemModel.Gebruiker" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MailsysteemModel.Taak" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MailsysteemModel.TaakCategorie" Width="1.5" PointX="7.5" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="MailsysteemModel.Vergadering" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MailsysteemModel.VergaderingGenodigde" Width="1.5" PointX="10.5" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MailsysteemModel.Woonplaats" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="MailsysteemModel.FK_Bericht_Gebruiker" ManuallyRouted="false" />
+        <AssociationConnector Association="MailsysteemModel.FK_BerichtOntvanger_Bericht" ManuallyRouted="false" />
+        <AssociationConnector Association="MailsysteemModel.FK_BerichtOntvanger_Gebruiker" ManuallyRouted="false" />
+        <AssociationConnector Association="MailsysteemModel.FK_TaakCategorie_Categorie" ManuallyRouted="false" />
+        <AssociationConnector Association="MailsysteemModel.FK_Gebruiker_Woonplaats" ManuallyRouted="false" />
+        <AssociationConnector Association="MailsysteemModel.FK_Taak_Gebruiker" ManuallyRouted="false" />
+        <AssociationConnector Association="MailsysteemModel.FK_Vergadering_Gebruiker" ManuallyRouted="false" />
+        <AssociationConnector Association="MailsysteemModel.FK_VergaderingGenodigde_Gebruiker" ManuallyRouted="false" />
+        <AssociationConnector Association="MailsysteemModel.FK_TaakCategorie_Taak" ManuallyRouted="false" />
+        <AssociationConnector Association="MailsysteemModel.FK_VergaderingGenodigde_Vergadering" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

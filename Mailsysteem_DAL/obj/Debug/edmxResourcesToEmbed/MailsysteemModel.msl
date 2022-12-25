@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MailsysteemModelStoreContainer" CdmEntityContainer="MailsysteemEntities">
+    <EntitySetMapping Name="Bericht">
+      <EntityTypeMapping TypeName="MailsysteemModel.Bericht">
+        <MappingFragment StoreEntitySet="Bericht">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="onderwerp" ColumnName="onderwerp" />
+          <ScalarProperty Name="datumVerstuurd" ColumnName="datumVerstuurd" />
+          <ScalarProperty Name="berichtTekst" ColumnName="berichtTekst" />
+          <ScalarProperty Name="bijlage" ColumnName="bijlage" />
+          <ScalarProperty Name="verzenderId" ColumnName="verzenderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BerichtOntvanger">
+      <EntityTypeMapping TypeName="MailsysteemModel.BerichtOntvanger">
+        <MappingFragment StoreEntitySet="BerichtOntvanger">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="berichtId" ColumnName="berichtId" />
+          <ScalarProperty Name="gebruikerId" ColumnName="gebruikerId" />
+          <ScalarProperty Name="isCC" ColumnName="isCC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categorie">
+      <EntityTypeMapping TypeName="MailsysteemModel.Categorie">
+        <MappingFragment StoreEntitySet="Categorie">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="naam" ColumnName="naam" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Gebruiker">
+      <EntityTypeMapping TypeName="MailsysteemModel.Gebruiker">
+        <MappingFragment StoreEntitySet="Gebruiker">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="naam" ColumnName="naam" />
+          <ScalarProperty Name="voornaam" ColumnName="voornaam" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="bedrijf" ColumnName="bedrijf" />
+          <ScalarProperty Name="gsm" ColumnName="gsm" />
+          <ScalarProperty Name="woonplaatsId" ColumnName="woonplaatsId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Taak">
+      <EntityTypeMapping TypeName="MailsysteemModel.Taak">
+        <MappingFragment StoreEntitySet="Taak">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="naam" ColumnName="naam" />
+          <ScalarProperty Name="isVoltooid" ColumnName="isVoltooid" />
+          <ScalarProperty Name="herinneringDatum" ColumnName="herinneringDatum" />
+          <ScalarProperty Name="eindDatum" ColumnName="eindDatum" />
+          <ScalarProperty Name="gebruikerId" ColumnName="gebruikerId" />
+          <ScalarProperty Name="extraInfo" ColumnName="extraInfo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TaakCategorie">
+      <EntityTypeMapping TypeName="MailsysteemModel.TaakCategorie">
+        <MappingFragment StoreEntitySet="TaakCategorie">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="taakId" ColumnName="taakId" />
+          <ScalarProperty Name="categorieId" ColumnName="categorieId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vergadering">
+      <EntityTypeMapping TypeName="MailsysteemModel.Vergadering">
+        <MappingFragment StoreEntitySet="Vergadering">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="onderwerp" ColumnName="onderwerp" />
+          <ScalarProperty Name="organisatorId" ColumnName="organisatorId" />
+          <ScalarProperty Name="datum" ColumnName="datum" />
+          <ScalarProperty Name="plaats" ColumnName="plaats" />
+          <ScalarProperty Name="beginTijd" ColumnName="beginTijd" />
+          <ScalarProperty Name="eindTijd" ColumnName="eindTijd" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VergaderingGenodigde">
+      <EntityTypeMapping TypeName="MailsysteemModel.VergaderingGenodigde">
+        <MappingFragment StoreEntitySet="VergaderingGenodigde">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="vergaderingId" ColumnName="vergaderingId" />
+          <ScalarProperty Name="gebruikerId" ColumnName="gebruikerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Woonplaats">
+      <EntityTypeMapping TypeName="MailsysteemModel.Woonplaats">
+        <MappingFragment StoreEntitySet="Woonplaats">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="gemeente" ColumnName="gemeente" />
+          <ScalarProperty Name="postcode" ColumnName="postcode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

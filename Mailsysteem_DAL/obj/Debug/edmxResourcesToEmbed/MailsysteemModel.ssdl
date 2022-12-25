@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MailsysteemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bericht">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="onderwerp" Type="varchar(max)" />
+    <Property Name="datumVerstuurd" Type="datetime" Nullable="false" />
+    <Property Name="berichtTekst" Type="varchar(max)" />
+    <Property Name="bijlage" Type="varchar" MaxLength="100" />
+    <Property Name="verzenderId" Type="int" />
+  </EntityType>
+  <EntityType Name="BerichtOntvanger">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="berichtId" Type="int" Nullable="false" />
+    <Property Name="gebruikerId" Type="int" Nullable="false" />
+    <Property Name="isCC" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Categorie">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="naam" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Gebruiker">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="naam" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="voornaam" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="bedrijf" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="gsm" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="woonplaatsId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Taak">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="naam" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="isVoltooid" Type="bit" Nullable="false" />
+    <Property Name="herinneringDatum" Type="date" />
+    <Property Name="eindDatum" Type="date" Nullable="false" />
+    <Property Name="gebruikerId" Type="int" Nullable="false" />
+    <Property Name="extraInfo" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="TaakCategorie">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="taakId" Type="int" Nullable="false" />
+    <Property Name="categorieId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Vergadering">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="onderwerp" Type="varchar(max)" />
+    <Property Name="organisatorId" Type="int" />
+    <Property Name="datum" Type="datetime" Nullable="false" />
+    <Property Name="plaats" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="beginTijd" Type="time" Precision="7" Nullable="false" />
+    <Property Name="eindTijd" Type="time" Precision="7" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VergaderingGenodigde">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="vergaderingId" Type="int" Nullable="false" />
+    <Property Name="gebruikerId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Woonplaats">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="gemeente" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="postcode" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Bericht_Gebruiker">
+    <End Role="Gebruiker" Type="Self.Gebruiker" Multiplicity="0..1" />
+    <End Role="Bericht" Type="Self.Bericht" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gebruiker">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Bericht">
+        <PropertyRef Name="verzenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BerichtOntvanger_Bericht">
+    <End Role="Bericht" Type="Self.Bericht" Multiplicity="1" />
+    <End Role="BerichtOntvanger" Type="Self.BerichtOntvanger" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bericht">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="BerichtOntvanger">
+        <PropertyRef Name="berichtId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BerichtOntvanger_Gebruiker">
+    <End Role="Gebruiker" Type="Self.Gebruiker" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BerichtOntvanger" Type="Self.BerichtOntvanger" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gebruiker">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="BerichtOntvanger">
+        <PropertyRef Name="gebruikerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Gebruiker_Woonplaats">
+    <End Role="Woonplaats" Type="Self.Woonplaats" Multiplicity="1" />
+    <End Role="Gebruiker" Type="Self.Gebruiker" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Woonplaats">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Gebruiker">
+        <PropertyRef Name="woonplaatsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Taak_Gebruiker">
+    <End Role="Gebruiker" Type="Self.Gebruiker" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Taak" Type="Self.Taak" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gebruiker">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Taak">
+        <PropertyRef Name="gebruikerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TaakCategorie_Categorie">
+    <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
+    <End Role="TaakCategorie" Type="Self.TaakCategorie" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorie">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TaakCategorie">
+        <PropertyRef Name="categorieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TaakCategorie_Taak">
+    <End Role="Taak" Type="Self.Taak" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TaakCategorie" Type="Self.TaakCategorie" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Taak">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TaakCategorie">
+        <PropertyRef Name="taakId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Vergadering_Gebruiker">
+    <End Role="Gebruiker" Type="Self.Gebruiker" Multiplicity="0..1" />
+    <End Role="Vergadering" Type="Self.Vergadering" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gebruiker">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Vergadering">
+        <PropertyRef Name="organisatorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VergaderingGenodigde_Gebruiker">
+    <End Role="Gebruiker" Type="Self.Gebruiker" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="VergaderingGenodigde" Type="Self.VergaderingGenodigde" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gebruiker">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="VergaderingGenodigde">
+        <PropertyRef Name="gebruikerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VergaderingGenodigde_Vergadering">
+    <End Role="Vergadering" Type="Self.Vergadering" Multiplicity="1" />
+    <End Role="VergaderingGenodigde" Type="Self.VergaderingGenodigde" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vergadering">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="VergaderingGenodigde">
+        <PropertyRef Name="vergaderingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MailsysteemModelStoreContainer">
+    <EntitySet Name="Bericht" EntityType="Self.Bericht" Schema="Mailsysteem" store:Type="Tables" />
+    <EntitySet Name="BerichtOntvanger" EntityType="Self.BerichtOntvanger" Schema="Mailsysteem" store:Type="Tables" />
+    <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="Mailsysteem" store:Type="Tables" />
+    <EntitySet Name="Gebruiker" EntityType="Self.Gebruiker" Schema="Mailsysteem" store:Type="Tables" />
+    <EntitySet Name="Taak" EntityType="Self.Taak" Schema="Mailsysteem" store:Type="Tables" />
+    <EntitySet Name="TaakCategorie" EntityType="Self.TaakCategorie" Schema="Mailsysteem" store:Type="Tables" />
+    <EntitySet Name="Vergadering" EntityType="Self.Vergadering" Schema="Mailsysteem" store:Type="Tables" />
+    <EntitySet Name="VergaderingGenodigde" EntityType="Self.VergaderingGenodigde" Schema="Mailsysteem" store:Type="Tables" />
+    <EntitySet Name="Woonplaats" EntityType="Self.Woonplaats" Schema="Mailsysteem" store:Type="Tables" />
+    <AssociationSet Name="FK_Bericht_Gebruiker" Association="Self.FK_Bericht_Gebruiker">
+      <End Role="Gebruiker" EntitySet="Gebruiker" />
+      <End Role="Bericht" EntitySet="Bericht" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BerichtOntvanger_Bericht" Association="Self.FK_BerichtOntvanger_Bericht">
+      <End Role="Bericht" EntitySet="Bericht" />
+      <End Role="BerichtOntvanger" EntitySet="BerichtOntvanger" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BerichtOntvanger_Gebruiker" Association="Self.FK_BerichtOntvanger_Gebruiker">
+      <End Role="Gebruiker" EntitySet="Gebruiker" />
+      <End Role="BerichtOntvanger" EntitySet="BerichtOntvanger" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Gebruiker_Woonplaats" Association="Self.FK_Gebruiker_Woonplaats">
+      <End Role="Woonplaats" EntitySet="Woonplaats" />
+      <End Role="Gebruiker" EntitySet="Gebruiker" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Taak_Gebruiker" Association="Self.FK_Taak_Gebruiker">
+      <End Role="Gebruiker" EntitySet="Gebruiker" />
+      <End Role="Taak" EntitySet="Taak" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TaakCategorie_Categorie" Association="Self.FK_TaakCategorie_Categorie">
+      <End Role="Categorie" EntitySet="Categorie" />
+      <End Role="TaakCategorie" EntitySet="TaakCategorie" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TaakCategorie_Taak" Association="Self.FK_TaakCategorie_Taak">
+      <End Role="Taak" EntitySet="Taak" />
+      <End Role="TaakCategorie" EntitySet="TaakCategorie" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Vergadering_Gebruiker" Association="Self.FK_Vergadering_Gebruiker">
+      <End Role="Gebruiker" EntitySet="Gebruiker" />
+      <End Role="Vergadering" EntitySet="Vergadering" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VergaderingGenodigde_Gebruiker" Association="Self.FK_VergaderingGenodigde_Gebruiker">
+      <End Role="Gebruiker" EntitySet="Gebruiker" />
+      <End Role="VergaderingGenodigde" EntitySet="VergaderingGenodigde" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VergaderingGenodigde_Vergadering" Association="Self.FK_VergaderingGenodigde_Vergadering">
+      <End Role="Vergadering" EntitySet="Vergadering" />
+      <End Role="VergaderingGenodigde" EntitySet="VergaderingGenodigde" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

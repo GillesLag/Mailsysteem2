@@ -1,0 +1,18 @@
+﻿<Window x:Class="Mailsysteem_WPF.CategorieWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Mailsysteem_WPF"
+        mc:Ignorable="d"
+        Title="CategorieWindow" Height="250" Width="150">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <ListBox Name="lbCategorieën" Margin="10"/>
+        <Button Grid.Row="1" Name="btnToevoegen" Content="Toevoegen" Margin="10" Click="btnToevoegen_Click"/>
+    </Grid>
+</Window>
