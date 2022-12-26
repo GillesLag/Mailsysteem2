@@ -26,6 +26,7 @@ namespace Mailsysteem_DAL
         public string berichtTekst { get; set; }
         public string bijlage { get; set; }
         public Nullable<int> verzenderId { get; set; }
+        public bool isVerwijderd { get; set; }
     
         public virtual Gebruiker Gebruiker { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

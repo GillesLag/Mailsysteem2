@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Bericht">
       <EntityTypeMapping TypeName="MailsysteemModel.Bericht">
         <MappingFragment StoreEntitySet="Bericht">
+          <ScalarProperty Name="isVerwijderd" ColumnName="isVerwijderd" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="onderwerp" ColumnName="onderwerp" />
           <ScalarProperty Name="datumVerstuurd" ColumnName="datumVerstuurd" />
@@ -16,6 +17,7 @@
     <EntitySetMapping Name="BerichtOntvanger">
       <EntityTypeMapping TypeName="MailsysteemModel.BerichtOntvanger">
         <MappingFragment StoreEntitySet="BerichtOntvanger">
+          <ScalarProperty Name="isVerwijderd" ColumnName="isVerwijderd" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="berichtId" ColumnName="berichtId" />
           <ScalarProperty Name="gebruikerId" ColumnName="gebruikerId" />
@@ -82,6 +84,7 @@
     <EntitySetMapping Name="VergaderingGenodigde">
       <EntityTypeMapping TypeName="MailsysteemModel.VergaderingGenodigde">
         <MappingFragment StoreEntitySet="VergaderingGenodigde">
+          <ScalarProperty Name="isVerwijderd" ColumnName="isVerwijderd" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="vergaderingId" ColumnName="vergaderingId" />
           <ScalarProperty Name="gebruikerId" ColumnName="gebruikerId" />

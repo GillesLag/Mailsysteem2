@@ -17,13 +17,13 @@ namespace Mailsysteem_DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Categorie()
         {
-            this.TaakCategorie = new HashSet<TaakCategorieRepo>();
+            this.TaakCategorie = new HashSet<TaakCategorie>();
         }
     
         public int id { get; set; }
         public string naam { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TaakCategorieRepo> TaakCategorie { get; set; }
+        public virtual ICollection<TaakCategorie> TaakCategorie { get; set; }
     }
 }

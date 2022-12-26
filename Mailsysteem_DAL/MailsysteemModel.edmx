@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MailsysteemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MailsysteemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Bericht">
           <Key>
             <PropertyRef Name="id" />
@@ -15,6 +15,7 @@
           <Property Name="berichtTekst" Type="varchar(max)" />
           <Property Name="bijlage" Type="varchar" MaxLength="100" />
           <Property Name="verzenderId" Type="int" />
+          <Property Name="isVerwijderd" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="BerichtOntvanger">
           <Key>
@@ -24,6 +25,7 @@
           <Property Name="berichtId" Type="int" Nullable="false" />
           <Property Name="gebruikerId" Type="int" Nullable="false" />
           <Property Name="isCC" Type="bit" Nullable="false" />
+          <Property Name="isVerwijderd" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Categorie">
           <Key>
@@ -83,6 +85,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="vergaderingId" Type="int" Nullable="false" />
           <Property Name="gebruikerId" Type="int" Nullable="false" />
+          <Property Name="isVerwijderd" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Woonplaats">
           <Key>
@@ -271,8 +274,7 @@
             <End Role="VergaderingGenodigde" EntitySet="VergaderingGenodigde" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MailsysteemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -288,6 +290,7 @@
           <Property Name="verzenderId" Type="Int32" />
           <NavigationProperty Name="Gebruiker" Relationship="Self.FK_Bericht_Gebruiker" FromRole="Bericht" ToRole="Gebruiker" />
           <NavigationProperty Name="BerichtOntvanger" Relationship="Self.FK_BerichtOntvanger_Bericht" FromRole="Bericht" ToRole="BerichtOntvanger" />
+          <Property Name="isVerwijderd" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="BerichtOntvanger">
           <Key>
@@ -299,6 +302,7 @@
           <Property Name="isCC" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Bericht" Relationship="Self.FK_BerichtOntvanger_Bericht" FromRole="BerichtOntvanger" ToRole="Bericht" />
           <NavigationProperty Name="Gebruiker" Relationship="Self.FK_BerichtOntvanger_Gebruiker" FromRole="BerichtOntvanger" ToRole="Gebruiker" />
+          <Property Name="isVerwijderd" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Categorie">
           <Key>
@@ -373,6 +377,7 @@
           <Property Name="gebruikerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Gebruiker" Relationship="Self.FK_VergaderingGenodigde_Gebruiker" FromRole="VergaderingGenodigde" ToRole="Gebruiker" />
           <NavigationProperty Name="Vergadering" Relationship="Self.FK_VergaderingGenodigde_Vergadering" FromRole="VergaderingGenodigde" ToRole="Vergadering" />
+          <Property Name="isVerwijderd" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Woonplaats">
           <Key>
@@ -571,6 +576,7 @@
           <EntitySetMapping Name="Bericht">
             <EntityTypeMapping TypeName="MailsysteemModel.Bericht">
               <MappingFragment StoreEntitySet="Bericht">
+                <ScalarProperty Name="isVerwijderd" ColumnName="isVerwijderd" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="onderwerp" ColumnName="onderwerp" />
                 <ScalarProperty Name="datumVerstuurd" ColumnName="datumVerstuurd" />
@@ -583,6 +589,7 @@
           <EntitySetMapping Name="BerichtOntvanger">
             <EntityTypeMapping TypeName="MailsysteemModel.BerichtOntvanger">
               <MappingFragment StoreEntitySet="BerichtOntvanger">
+                <ScalarProperty Name="isVerwijderd" ColumnName="isVerwijderd" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="berichtId" ColumnName="berichtId" />
                 <ScalarProperty Name="gebruikerId" ColumnName="gebruikerId" />
@@ -649,6 +656,7 @@
           <EntitySetMapping Name="VergaderingGenodigde">
             <EntityTypeMapping TypeName="MailsysteemModel.VergaderingGenodigde">
               <MappingFragment StoreEntitySet="VergaderingGenodigde">
+                <ScalarProperty Name="isVerwijderd" ColumnName="isVerwijderd" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="vergaderingId" ColumnName="vergaderingId" />
                 <ScalarProperty Name="gebruikerId" ColumnName="gebruikerId" />

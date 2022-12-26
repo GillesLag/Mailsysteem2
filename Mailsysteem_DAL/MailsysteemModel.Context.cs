@@ -30,7 +30,7 @@ namespace Mailsysteem_DAL
         public virtual DbSet<Categorie> Categorie { get; set; }
         public virtual DbSet<Gebruiker> Gebruiker { get; set; }
         public virtual DbSet<Taak> Taak { get; set; }
-        public virtual DbSet<TaakCategorieRepo> TaakCategorie { get; set; }
+        public virtual DbSet<TaakCategorie> TaakCategorie { get; set; }
         public virtual DbSet<Vergadering> Vergadering { get; set; }
         public virtual DbSet<VergaderingGenodigde> VergaderingGenodigde { get; set; }
         public virtual DbSet<Woonplaats> Woonplaats { get; set; }

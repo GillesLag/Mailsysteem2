@@ -10,5 +10,6 @@ namespace Mailsysteem_DAL
     {
         void InsertBerichtOntvangers(string strOntvangers, string strCc);
         int GetGebruikerId(string emailGebruiker);
+        bool UpdateBerichtOntvanger(BerichtOntvanger berichtOntvanger);
     }
 }

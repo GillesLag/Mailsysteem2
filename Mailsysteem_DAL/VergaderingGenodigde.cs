@@ -17,6 +17,7 @@ namespace Mailsysteem_DAL
         public int id { get; set; }
         public int vergaderingId { get; set; }
         public int gebruikerId { get; set; }
+        public bool isVerwijderd { get; set; }
     
         public virtual Gebruiker Gebruiker { get; set; }
         public virtual Vergadering Vergadering { get; set; }

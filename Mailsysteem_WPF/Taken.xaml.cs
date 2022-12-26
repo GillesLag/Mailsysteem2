@@ -91,7 +91,7 @@ namespace Mailsysteem_WPF
 
                 string categorieën = "";
 
-                foreach (TaakCategorieRepo tc in taak.TaakCategorie)
+                foreach (TaakCategorie tc in taak.TaakCategorie)
                 {
                     categorieën += tc.Categorie.naam + ", ";
                 }

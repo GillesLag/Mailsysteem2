@@ -10,6 +10,7 @@
     <Property Name="berichtTekst" Type="varchar(max)" />
     <Property Name="bijlage" Type="varchar" MaxLength="100" />
     <Property Name="verzenderId" Type="int" />
+    <Property Name="isVerwijderd" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="BerichtOntvanger">
     <Key>
@@ -19,6 +20,7 @@
     <Property Name="berichtId" Type="int" Nullable="false" />
     <Property Name="gebruikerId" Type="int" Nullable="false" />
     <Property Name="isCC" Type="bit" Nullable="false" />
+    <Property Name="isVerwijderd" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Categorie">
     <Key>
@@ -78,6 +80,7 @@
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="vergaderingId" Type="int" Nullable="false" />
     <Property Name="gebruikerId" Type="int" Nullable="false" />
+    <Property Name="isVerwijderd" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Woonplaats">
     <Key>

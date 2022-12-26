@@ -62,6 +62,7 @@
                     <StackPanel Grid.Column="0" Margin="10">
                         <Button x:Name="btnInbox" Content="Inbox" Margin="0,0,0,10" Click="btnInbox_Click"/>
                         <Button x:Name="btnVezondenItems" Content="Verzonden items" Margin="0,0,0,10" Click="btnVezondenItems_Click"/>
+                        <Button x:Name="btnVerwijderd" Content="Verwijderde items" Margin="0,0,0,10" Click="btnVerwijderd_Click"/>
                     </StackPanel>
 
                     <ListBox x:Name="lbMailItems" Grid.Column="1"

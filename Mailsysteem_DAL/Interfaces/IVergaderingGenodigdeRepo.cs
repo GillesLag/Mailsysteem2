@@ -10,5 +10,6 @@ namespace Mailsysteem_DAL
     {
         void InsertVergaderingGenodigde(List<string> emails);
         int GetGebruikerId(string emailGebruiker);
+        bool UpdateVergaderingGenodigde(VergaderingGenodigde vergaderingGenodigde);
     }
 }

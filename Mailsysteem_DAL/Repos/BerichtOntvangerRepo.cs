@@ -33,8 +33,8 @@ namespace Mailsysteem_DAL
         {
             List<string> ontvangers = strOntvangers.Trim().Split(';').Where(x => !(string.IsNullOrWhiteSpace(x))).Select(x => x.Trim()).ToList();
             List<string> ccOntvangers = strCc.Trim().Split(';').Where(x => !(string.IsNullOrWhiteSpace(x))).Select(x => x.Trim()).ToList();
-            string sql = $"INSERT INTO Mailsysteem.berichtOntvanger (berichtId, gebruikerId, isCC)" +
-                            $" VALUES((SELECT TOP 1 id FROM Mailsysteem.Bericht ORDER BY id DESC), (@gebruikerId), @isCC);";
+            string sql = $"INSERT INTO Mailsysteem.berichtOntvanger (berichtId, gebruikerId, isCC, isVerwijderd)" +
+                            $" VALUES((SELECT TOP 1 id FROM Mailsysteem.Bericht ORDER BY id DESC), (@gebruikerId), @isCC, 0);";
 
             using (IDbConnection db = new SqlConnection(ConnectionString))
             {
@@ -60,6 +60,30 @@ namespace Mailsysteem_DAL
                     db.Execute(sql, parameters);
                 }
             }
+        }
+
+        public bool UpdateBerichtOntvanger(BerichtOntvanger berichtOntvanger)
+        {
+            int affectedRows;
+            string sql = $@"UPDATE Mailsysteem.BerichtOntvanger
+                        SET isVerwijderd = @isVerwijderd
+                        WHERE id = @id";
+
+            var parameters = new
+            {
+                @isVerwijderd = berichtOntvanger.isVerwijderd,
+                @id = berichtOntvanger.id
+            };
+
+            using (IDbConnection db = new SqlConnection(ConnectionString))
+            {
+                affectedRows = db.Execute(sql, parameters);
+            }
+
+            if (affectedRows == 0)
+                return false;
+
+            return true;
         }
     }
 }

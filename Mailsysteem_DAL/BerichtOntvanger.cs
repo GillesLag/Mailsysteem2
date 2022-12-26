@@ -18,6 +18,7 @@ namespace Mailsysteem_DAL
         public int berichtId { get; set; }
         public int gebruikerId { get; set; }
         public bool isCC { get; set; }
+        public bool isVerwijderd { get; set; }
     
         public virtual Bericht Bericht { get; set; }
         public virtual Gebruiker Gebruiker { get; set; }

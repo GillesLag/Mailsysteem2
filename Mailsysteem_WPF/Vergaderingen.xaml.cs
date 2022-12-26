@@ -22,8 +22,10 @@ namespace Mailsysteem_WPF
     public partial class Vergaderingen : Window
     {
         private VergaderingRepo vergaderingRepo = new VergaderingRepo();
+        private VergaderingGenodigdeRepo vergaderingGenodigdeRepo = new VergaderingGenodigdeRepo();
         private Gebruiker gebruiker;
         private ObservableCollection<Vergadering> vergaderingen = new ObservableCollection<Vergadering>();
+        private ObservableCollection<Vergadering> verwijderdeVergaderingen = new ObservableCollection<Vergadering>();
         public Vergaderingen(Gebruiker g)
         {
             InitializeComponent();
@@ -38,10 +40,15 @@ namespace Mailsysteem_WPF
             item.IsSelected = true;
             if (lbVergaderingItems.SelectedItem is Vergadering vergadering)
             {
-                //TODO delete vergadering nog implementeren
-                MessageBox.Show("nog implementeren");
-                //vergaderingen.Remove(vergadering);
-               // DatabaseOperations.DeleteVergadering(vergadering);
+                VergaderingGenodigde vg = vergadering.VergaderingGenodigde.Single(x => x.gebruikerId == gebruiker.id);
+                vg.isVerwijderd = true;
+
+                if (!vergaderingGenodigdeRepo.UpdateVergaderingGenodigde(vg))
+                    MessageBox.Show("Vergadering kon niet verwijderd worden. Er is iets mis met de database!");
+
+                vergaderingen.Remove(vergadering);
+                if (!verwijderdeVergaderingen.Contains(vergadering))
+                    verwijderdeVergaderingen.Add(vergadering);
             }
         }
 
@@ -100,13 +107,30 @@ namespace Mailsysteem_WPF
 
         private void OphalenVergaderingen()
         {
+            vergaderingen.Clear();
+            verwijderdeVergaderingen.Clear();
+
             vergaderingRepo.OphalenVergaderingen(gebruiker.id).ForEach(x =>
             {
-                if (!vergaderingen.Contains(x))
-                    vergaderingen.Add(x);
+                if (x.VergaderingGenodigde.Single(vg => vg.gebruikerId == gebruiker.id).isVerwijderd)
+                {
+                    if (!verwijderdeVergaderingen.Contains(x))
+                        verwijderdeVergaderingen.Add(x);
+                }
+
+                else
+                {
+                    if (!vergaderingen.Contains(x))
+                        vergaderingen.Add(x);
+                }
             });
 
             lbVergaderingItems.DataContext = vergaderingen;
+        }
+
+        private void btnVerwijderdeVergaderingen_Click(object sender, RoutedEventArgs e)
+        {
+            lbVergaderingItems.DataContext = verwijderdeVergaderingen;
         }
     }
 }

@@ -12,6 +12,7 @@
     <Property Name="verzenderId" Type="Int32" />
     <NavigationProperty Name="Gebruiker" Relationship="Self.FK_Bericht_Gebruiker" FromRole="Bericht" ToRole="Gebruiker" />
     <NavigationProperty Name="BerichtOntvanger" Relationship="Self.FK_BerichtOntvanger_Bericht" FromRole="Bericht" ToRole="BerichtOntvanger" />
+    <Property Name="isVerwijderd" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="BerichtOntvanger">
     <Key>
@@ -23,6 +24,7 @@
     <Property Name="isCC" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Bericht" Relationship="Self.FK_BerichtOntvanger_Bericht" FromRole="BerichtOntvanger" ToRole="Bericht" />
     <NavigationProperty Name="Gebruiker" Relationship="Self.FK_BerichtOntvanger_Gebruiker" FromRole="BerichtOntvanger" ToRole="Gebruiker" />
+    <Property Name="isVerwijderd" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Categorie">
     <Key>
@@ -97,6 +99,7 @@
     <Property Name="gebruikerId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Gebruiker" Relationship="Self.FK_VergaderingGenodigde_Gebruiker" FromRole="VergaderingGenodigde" ToRole="Gebruiker" />
     <NavigationProperty Name="Vergadering" Relationship="Self.FK_VergaderingGenodigde_Vergadering" FromRole="VergaderingGenodigde" ToRole="Vergadering" />
+    <Property Name="isVerwijderd" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Woonplaats">
     <Key>

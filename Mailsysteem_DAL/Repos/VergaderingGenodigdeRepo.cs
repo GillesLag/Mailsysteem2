@@ -47,5 +47,29 @@ namespace Mailsysteem_DAL
                 }
             }
         }
+
+        public bool UpdateVergaderingGenodigde(VergaderingGenodigde vergaderingGenodigde)
+        {
+            int affectedRows;
+            string sql = $@"UPDATE Mailsysteem.VergaderingGenodigde
+                        SET isVerwijderd = @isVerwijderd
+                        WHERE id = @id";
+
+            var parameters = new
+            {
+                @isVerwijderd = vergaderingGenodigde.isVerwijderd,
+                @id = vergaderingGenodigde.id
+            };
+
+            using (IDbConnection db = new SqlConnection(ConnectionString))
+            {
+                affectedRows = db.Execute(sql, parameters);
+            }
+
+            if (affectedRows == 0)
+                return false;
+
+            return true;
+        }
     }
 }

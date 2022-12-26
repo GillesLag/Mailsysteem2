@@ -14,8 +14,8 @@ namespace Mailsysteem_DAL
         public bool InsertBericht(Bericht bericht)
         {
             int affectedRows;
-            string sql = @"INSERT INTO Mailsysteem.Bericht (onderwerp, datumVerstuurd, berichtTekst, bijlage, verzenderId)
-                            VALUES (@onderwerp, @datumVerstuurd, @berichtTekst, @bijlage, @verzenderId);";
+            string sql = @"INSERT INTO Mailsysteem.Bericht (onderwerp, datumVerstuurd, berichtTekst, bijlage, verzenderId, isVerwijderd)
+                            VALUES (@onderwerp, @datumVerstuurd, @berichtTekst, @bijlage, @verzenderId, 0);";
 
             var parameters = new
             {
@@ -76,6 +76,30 @@ namespace Mailsysteem_DAL
 
                 }, splitOn: "id").Distinct().ToList();
             }
+        }
+
+        public bool UpdateBericht(Bericht bericht)
+        {
+            int affectedRows;
+            string sql = $@"UPDATE Mailsysteem.Bericht
+                            SET isVerwijderd = @isVerwijderd
+                            WHERE id = @id";
+
+            var parameters = new
+            {
+                @isVerwijderd = bericht.isVerwijderd,
+                @id = bericht.id
+            };
+
+            using (IDbConnection db = new SqlConnection(ConnectionString))
+            {
+                affectedRows = db.Execute(sql, parameters);
+            }
+
+            if (affectedRows == 0)
+                return false;
+
+            return true;
         }
     }
 }

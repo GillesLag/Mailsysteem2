@@ -70,7 +70,7 @@ namespace Mailsysteem_DAL
 
             using (IDbConnection db = new SqlConnection(ConnectionString))
             {
-                return db.Query<Taak, TaakCategorieRepo, Categorie, Taak>(sql, (t, tc, c) =>
+                return db.Query<Taak, TaakCategorie, Categorie, Taak>(sql, (t, tc, c) =>
                 {
                     Taak taak;
 
@@ -78,7 +78,7 @@ namespace Mailsysteem_DAL
                     {
                         taak = t;
                         if (taak.TaakCategorie == null)
-                            taak.TaakCategorie = new List<TaakCategorieRepo>();
+                            taak.TaakCategorie = new List<TaakCategorie>();
 
                         opslagBoek.Add(t.id, taak);
                     }

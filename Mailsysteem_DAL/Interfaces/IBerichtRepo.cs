@@ -10,5 +10,6 @@ namespace Mailsysteem_DAL
     {
         List<Bericht> OphalenBerichten(int gebruikerId);
         bool InsertBericht(Bericht bericht);
+        bool UpdateBericht(Bericht bericht);
     }
 }

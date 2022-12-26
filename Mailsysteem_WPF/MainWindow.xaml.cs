@@ -24,8 +24,10 @@ namespace Mailsysteem_WPF
     {
         private GebruikerRepo gebruikerRepo = new GebruikerRepo();
         private BerichtRepo berichtRepo = new BerichtRepo();
-        private ObservableCollection<Bericht> MailItemsOntvangen = new ObservableCollection<Bericht>();
-        private ObservableCollection<Bericht> MailItemsVerzonden = new ObservableCollection<Bericht>();
+        private BerichtOntvangerRepo berichtOntvangerRepo = new BerichtOntvangerRepo();
+        private ObservableCollection<Bericht> mailItemsOntvangen = new ObservableCollection<Bericht>();
+        private ObservableCollection<Bericht> mailItemsVerzonden = new ObservableCollection<Bericht>();
+        private ObservableCollection<Bericht> mailItemsVerwijderd = new ObservableCollection<Bericht>();
         private List<Gebruiker> GebruikerList;
         private Gebruiker gebruiker;
         private readonly int keuzeGebruiker = 1;
@@ -36,7 +38,7 @@ namespace Mailsysteem_WPF
             GebruikerList = gebruikerRepo.OphalenGebruikers();
             gebruiker = GebruikerList[keuzeGebruiker];
             ophalenBerichten();
-            lbMailItems.DataContext = MailItemsOntvangen;
+            lbMailItems.DataContext = mailItemsOntvangen;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -51,10 +53,26 @@ namespace Mailsysteem_WPF
             item.IsSelected = true;
             if (lbMailItems.SelectedItem is Bericht bericht)
             {
-                //if (!DatabaseOperations.DeleteMail(bericht))
-                    MessageBox.Show("nog implementeren");
-            }
+                bericht.isVerwijderd = true;
+                if (mailItemsVerzonden.Contains(bericht))
+                {
+                    if (!berichtRepo.UpdateBericht(bericht))
+                        MessageBox.Show("Berich kon niet verwijderd worden. Problemen met de database!");
+                }
 
+                else
+                {
+                    BerichtOntvanger bo = bericht.BerichtOntvanger.Single(x => x.gebruikerId == gebruiker.id);
+                    bo.isVerwijderd = true;
+                    if (!berichtOntvangerRepo.UpdateBerichtOntvanger(bo))
+                        MessageBox.Show("Berich kon niet verwijderd worden. Problemen met de database!");
+                }
+
+                mailItemsOntvangen.Remove(bericht);
+
+                if (!mailItemsVerwijderd.Contains(bericht))
+                    mailItemsVerwijderd.Add(bericht);
+            }
         }
 
         private void lbMailItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -92,12 +110,12 @@ namespace Mailsysteem_WPF
 
         private void btnVezondenItems_Click(object sender, RoutedEventArgs e)
         {
-            lbMailItems.DataContext = MailItemsVerzonden;
+            lbMailItems.DataContext = mailItemsVerzonden;
         }
 
         private void btnInbox_Click(object sender, RoutedEventArgs e)
         {
-            lbMailItems.DataContext = MailItemsOntvangen;
+            lbMailItems.DataContext = mailItemsOntvangen;
         }
 
         private void btnNieuweMail_Click(object sender, RoutedEventArgs e)
@@ -158,18 +176,28 @@ namespace Mailsysteem_WPF
 
         private void ophalenBerichten()
         {
+            mailItemsOntvangen.Clear();
+            mailItemsVerwijderd.Clear();
+            mailItemsVerzonden.Clear();
+
             berichtRepo.OphalenBerichten(gebruiker.id).ForEach(x =>
             {
                 if (x.verzenderId == gebruiker.id)
                 {
-                    if (!MailItemsVerzonden.Contains(x))
-                        MailItemsVerzonden.Add(x);
+                    if (x.isVerwijderd)
+                        mailItemsVerwijderd.Add(x);
+
+                    else
+                        mailItemsVerzonden.Add(x);
                 }
 
                 else
                 {
-                    if (!MailItemsOntvangen.Contains(x))
-                        MailItemsOntvangen.Add(x);
+                    if (x.BerichtOntvanger.Where(bo => bo.gebruikerId == gebruiker.id).First().isVerwijderd)
+                        mailItemsVerwijderd.Add(x);
+
+                    else
+                        mailItemsOntvangen.Add(x);
                 }
             });
         }
@@ -194,6 +222,11 @@ namespace Mailsysteem_WPF
             if (parent != null && !(parent is T))
                 return (T)GetAncestorOfType<T>((FrameworkElement)parent);
             return (T)parent;
+        }
+
+        private void btnVerwijderd_Click(object sender, RoutedEventArgs e)
+        {
+            lbMailItems.DataContext = mailItemsVerwijderd;
         }
     }
 }
