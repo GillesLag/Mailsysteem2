@@ -23,7 +23,6 @@ namespace Mailsysteem_DAL
                 }
                 catch (Exception)
                 {
-
                     return -1;
                 }
             }

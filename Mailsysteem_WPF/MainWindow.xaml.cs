@@ -41,11 +41,6 @@ namespace Mailsysteem_WPF
             lbMailItems.DataContext = mailItemsOntvangen;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             ListBoxItem item = GetAncestorOfType<ListBoxItem>(sender as Button);
@@ -53,9 +48,10 @@ namespace Mailsysteem_WPF
             item.IsSelected = true;
             if (lbMailItems.SelectedItem is Bericht bericht)
             {
-                bericht.isVerwijderd = true;
                 if (mailItemsVerzonden.Contains(bericht))
                 {
+                    bericht.isVerwijderd = true;
+
                     if (!berichtRepo.UpdateBericht(bericht))
                         MessageBox.Show("Berich kon niet verwijderd worden. Problemen met de database!");
                 }
