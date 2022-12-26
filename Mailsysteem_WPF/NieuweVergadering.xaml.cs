@@ -20,6 +20,8 @@ namespace Mailsysteem_WPF
     /// </summary>
     public partial class NieuweVergadering : Window
     {
+        private VergaderingRepo vergaderingRepo = new VergaderingRepo();
+        private VergaderingGenodigdeRepo vergaderingGenodigdeRepo = new VergaderingGenodigdeRepo();
         private Gebruiker gebruiker;
         public NieuweVergadering(Gebruiker g)
         {
@@ -50,7 +52,7 @@ namespace Mailsysteem_WPF
 
             foreach (string email in emailAdressen)
             {
-                if (DatabaseOperations.GetGebruikerId(email) == -1)
+                if (vergaderingGenodigdeRepo.GetGebruikerId(email) == -1)
                     fouteEmailAdressen += email + Environment.NewLine;
             }
 
@@ -83,13 +85,13 @@ namespace Mailsysteem_WPF
                 return;
             }
 
-            if (!DatabaseOperations.InsertVergadering(vergadering))
+            if (!vergaderingRepo.InsertVergadering(vergadering))
             {
                 MessageBox.Show("Vergadering kon niet opgslagen worden");
                 return;
             }
 
-            DatabaseOperations.InsertVergaderingGenodigde(emailAdressen);
+            vergaderingGenodigdeRepo.InsertVergaderingGenodigde(emailAdressen);
 
             this.Close();
         }

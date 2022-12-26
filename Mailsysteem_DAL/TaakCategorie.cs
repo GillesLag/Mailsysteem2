@@ -12,7 +12,7 @@ namespace Mailsysteem_DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class TaakCategorie
+    public partial class TaakCategorieRepo
     {
         public int id { get; set; }
         public int taakId { get; set; }

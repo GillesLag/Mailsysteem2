@@ -21,11 +21,12 @@ namespace Mailsysteem_WPF
     public partial class CategorieWindow : Window
     {
         public string keuze;
+        private CategorieRepo categorieRepo = new CategorieRepo();
         private List<Categorie> categorieën;
         public CategorieWindow()
         {
             InitializeComponent();
-            categorieën = DatabaseOperations.OphalenCategorieën();
+            categorieën = categorieRepo.OphalenCategorieën();
             lbCategorieën.ItemsSource = categorieën;
         }
 

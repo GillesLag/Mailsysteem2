@@ -22,6 +22,8 @@ namespace Mailsysteem_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private GebruikerRepo gebruikerRepo = new GebruikerRepo();
+        private BerichtRepo berichtRepo = new BerichtRepo();
         private ObservableCollection<Bericht> MailItemsOntvangen = new ObservableCollection<Bericht>();
         private ObservableCollection<Bericht> MailItemsVerzonden = new ObservableCollection<Bericht>();
         private List<Gebruiker> GebruikerList;
@@ -31,7 +33,7 @@ namespace Mailsysteem_WPF
         {
             InitializeComponent();
 
-            GebruikerList = DatabaseOperations.OphalenGebruikers();
+            GebruikerList = gebruikerRepo.OphalenGebruikers();
             gebruiker = GebruikerList[keuzeGebruiker];
             ophalenBerichten();
             lbMailItems.DataContext = MailItemsOntvangen;
@@ -49,8 +51,8 @@ namespace Mailsysteem_WPF
             item.IsSelected = true;
             if (lbMailItems.SelectedItem is Bericht bericht)
             {
-                if (!DatabaseOperations.DeleteMail(bericht))
-                    MessageBox.Show("Bericht kon niet verwijderd worden!");
+                //if (!DatabaseOperations.DeleteMail(bericht))
+                    MessageBox.Show("nog implementeren");
             }
 
         }
@@ -156,7 +158,7 @@ namespace Mailsysteem_WPF
 
         private void ophalenBerichten()
         {
-            DatabaseOperations.OphalenBerichten(gebruiker.id).ForEach(x =>
+            berichtRepo.OphalenBerichten(gebruiker.id).ForEach(x =>
             {
                 if (x.verzenderId == gebruiker.id)
                 {

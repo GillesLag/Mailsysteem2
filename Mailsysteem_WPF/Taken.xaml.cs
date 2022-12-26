@@ -21,6 +21,7 @@ namespace Mailsysteem_WPF
     /// </summary>
     public partial class Taken : Window
     {
+        private TaakRepo taakRepo = new TaakRepo();
         private Gebruiker gebruiker;
         private ObservableCollection<Taak> taken = new ObservableCollection<Taak>();
         private ObservableCollection<Taak> takenKlaar = new ObservableCollection<Taak>();
@@ -42,7 +43,7 @@ namespace Mailsysteem_WPF
             {
                 taak.isVoltooid = true;
 
-                if (!DatabaseOperations.UpdateTaak(taak))
+                if (!taakRepo.UpdateTaak(taak))
                 {
                     MessageBox.Show("Er is iets mis met de database!");
                     return;
@@ -68,7 +69,7 @@ namespace Mailsysteem_WPF
             {
                 taken.Remove(taak);
                 takenKlaar.Remove(taak);
-                DatabaseOperations.DeleteTaak(taak);
+                taakRepo.DeleteTaak(taak);
             }
         }
 
@@ -90,7 +91,7 @@ namespace Mailsysteem_WPF
 
                 string categorieën = "";
 
-                foreach (TaakCategorie tc in taak.TaakCategorie)
+                foreach (TaakCategorieRepo tc in taak.TaakCategorie)
                 {
                     categorieën += tc.Categorie.naam + ", ";
                 }
@@ -116,7 +117,7 @@ namespace Mailsysteem_WPF
         {
             taken.Clear();
             takenKlaar.Clear();
-            DatabaseOperations.OphalenTaken(gebruiker.id).ForEach(x =>
+            taakRepo.OphalenTaken(gebruiker.id).ForEach(x =>
             {
                 if (!x.isVoltooid)
                     taken.Add(x);
@@ -124,13 +125,6 @@ namespace Mailsysteem_WPF
                 else
                     takenKlaar.Add(x);
             });
-
-            var test = DatabaseOperations.OphalenTaken(gebruiker.id);
-
-            foreach (var item in test)
-            {
-
-            }
 
             lbTaakItems.DataContext = taken;
         }

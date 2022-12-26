@@ -20,6 +20,8 @@ namespace Mailsysteem_WPF
     /// </summary>
     public partial class NieuweTaak : Window
     {
+        private TaakRepo TaakRepo = new TaakRepo();
+        private TaakCategorieRepo taakCategorieRepo = new TaakCategorieRepo();
         private Gebruiker gebruiker;
         public NieuweTaak(Gebruiker g)
         {
@@ -55,12 +57,12 @@ namespace Mailsysteem_WPF
                 return;
             }
 
-            if (!DatabaseOperations.InsertTaak(taak))
+            if (!TaakRepo.InsertTaak(taak))
             {
                 MessageBox.Show("Geen taak kunnen toevoegen!");
             }
 
-            DatabaseOperations.InsertTaakCategorie(taak, lblCategorieën.Content.ToString());
+            taakCategorieRepo.InsertTaakCategorie(taak, lblCategorieën.Content.ToString());
 
             this.Close();
         }

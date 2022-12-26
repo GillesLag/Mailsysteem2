@@ -17,7 +17,7 @@ namespace Mailsysteem_DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Taak()
         {
-            this.TaakCategorie = new HashSet<TaakCategorie>();
+            this.TaakCategorie = new HashSet<TaakCategorieRepo>();
         }
     
         public int id { get; set; }
@@ -30,6 +30,6 @@ namespace Mailsysteem_DAL
     
         public virtual Gebruiker Gebruiker { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TaakCategorie> TaakCategorie { get; set; }
+        public virtual ICollection<TaakCategorieRepo> TaakCategorie { get; set; }
     }
 }

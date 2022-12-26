@@ -20,6 +20,8 @@ namespace Mailsysteem_WPF
     /// </summary>
     public partial class NieuweMail : Window
     {
+        private BerichtRepo berichtRepo = new BerichtRepo();
+        private BerichtOntvangerRepo berichtOntvangerRepo = new BerichtOntvangerRepo();
         private Gebruiker gebruiker;
         public NieuweMail(Gebruiker g)
         {
@@ -65,7 +67,7 @@ namespace Mailsysteem_WPF
 
             foreach (string email in emailAdressen)
             {
-                if (DatabaseOperations.GetGebruikerId(email) == -1)
+                if (berichtOntvangerRepo.GetGebruikerId(email) == -1)
                     fouteEmailAdressen += email + Environment.NewLine;
             }
 
@@ -81,12 +83,12 @@ namespace Mailsysteem_WPF
                 return;
             }
 
-            if (!DatabaseOperations.InsertBericht(b))
+            if (!berichtRepo.InsertBericht(b))
             {
                 MessageBox.Show("Bericht kon niet verzonden worden");
             }
 
-            DatabaseOperations.InsertBerichtOntvangers(tbOntvangers.Text, tbOntvangersCc.Text);
+            berichtOntvangerRepo.InsertBerichtOntvangers(tbOntvangers.Text, tbOntvangersCc.Text);
 
             this.Close();
         }

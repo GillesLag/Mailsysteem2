@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseRepository.cs" />
     <Compile Include="Basisklasse.cs" />
     <Compile Include="Bericht.cs">
       <DependentUpon>MailsysteemModel.tt</DependentUpon>
@@ -64,12 +65,18 @@
     <Compile Include="Categorie.cs">
       <DependentUpon>MailsysteemModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseConnectie.cs" />
-    <Compile Include="DatabaseOperations.cs" />
+    <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Gebruiker.cs">
       <DependentUpon>MailsysteemModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IDatabaseConnectie.cs" />
+    <Compile Include="Interfaces\IBerichtOntvangerRepo.cs" />
+    <Compile Include="Interfaces\IBerichtRepo.cs" />
+    <Compile Include="Interfaces\ICategorieRepo.cs" />
+    <Compile Include="Interfaces\IGebruikerRepo.cs" />
+    <Compile Include="Interfaces\ITaakRepo.cs" />
+    <Compile Include="Interfaces\ITaakCategorieRepo.cs" />
+    <Compile Include="Interfaces\IVergaderingRepo.cs" />
+    <Compile Include="Interfaces\IVergaderingGenodigdeRepo.cs" />
     <Compile Include="MailsysteemModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -91,6 +98,14 @@
     <Compile Include="Partials\Taak.cs" />
     <Compile Include="Partials\Vergadering.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repos\BerichtOntvangerRepo.cs" />
+    <Compile Include="Repos\BerichtRepo.cs" />
+    <Compile Include="Repos\CategorieRepo.cs" />
+    <Compile Include="Repos\GebruikerRepo.cs" />
+    <Compile Include="Repos\TaakCategorieRepo.cs" />
+    <Compile Include="Repos\TaakRepo.cs" />
+    <Compile Include="Repos\VergaderingGenodigdeRepo.cs" />
+    <Compile Include="Repos\VergaderingRepo.cs" />
     <Compile Include="Taak.cs">
       <DependentUpon>MailsysteemModel.tt</DependentUpon>
     </Compile>
@@ -135,5 +150,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

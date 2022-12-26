@@ -21,6 +21,7 @@ namespace Mailsysteem_WPF
     /// </summary>
     public partial class Vergaderingen : Window
     {
+        private VergaderingRepo vergaderingRepo = new VergaderingRepo();
         private Gebruiker gebruiker;
         private ObservableCollection<Vergadering> vergaderingen = new ObservableCollection<Vergadering>();
         public Vergaderingen(Gebruiker g)
@@ -99,7 +100,7 @@ namespace Mailsysteem_WPF
 
         private void OphalenVergaderingen()
         {
-            DatabaseOperations.OphalenVergaderingen(gebruiker.id).ForEach(x =>
+            vergaderingRepo.OphalenVergaderingen(gebruiker.id).ForEach(x =>
             {
                 if (!vergaderingen.Contains(x))
                     vergaderingen.Add(x);
