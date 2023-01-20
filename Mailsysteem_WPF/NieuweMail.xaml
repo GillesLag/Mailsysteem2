@@ -25,19 +25,19 @@
             <StackPanel Grid.Column="1" Margin="0,50,0,0">
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <Label Name="lblAan" Content="Aan:" HorizontalContentAlignment="Right" Width="75"/>
-                    <TextBox x:Name="tbOntvangers" Text="voorbeel.gmail@com" VerticalContentAlignment="Center" Width="500" Height="20"/>
+                    <TextBox x:Name="tbOntvangers" VerticalContentAlignment="Center" Width="500" Height="20"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <Label Name="lblCc" Content="CC:" HorizontalContentAlignment="Right" Width="75"/>
-                    <TextBox x:Name="tbOntvangersCc" Text="voorbeel.gmail@com" VerticalContentAlignment="Center" Width="500" Height="20"/>
+                    <TextBox x:Name="tbOntvangersCc" VerticalContentAlignment="Center" Width="500" Height="20"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Name="lblOnderwerp" Content="Onderwerp:" HorizontalContentAlignment="Right" Width="75"/>
-                    <TextBox x:Name="tbOnderwerp" Text="voorbeel.gmail@com" VerticalContentAlignment="Center" Width="500" Height="20"/>
+                    <TextBox x:Name="tbOnderwerp" VerticalContentAlignment="Center" Width="500" Height="20"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
 
-        <TextBox x:Name="tbBerichtBody" Grid.Row="1" Text="testetstetsetestestsetset" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="20"/>
+        <TextBox x:Name="tbBerichtBody" Grid.Row="1" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="20"/>
     </Grid>
 </Window>
