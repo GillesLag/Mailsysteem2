@@ -26,12 +26,12 @@
             <StackPanel Grid.Column="1" Margin="0,50,0,0">
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <Label Name="lblTitel" Content="Titel:" HorizontalContentAlignment="Right" Width="125"/>
-                    <TextBox x:Name="tbTitelTekst" Text="Titel" VerticalContentAlignment="Center" Width="500" Height="20"/>
+                    <TextBox x:Name="tbTitelTekst" VerticalContentAlignment="Center" Width="500" Height="20"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <Label Name="lblcategorie" Content="categorie:" HorizontalContentAlignment="Right" Width="125"/>
                     <Button Name="btnCategorieToevoegen" Content="Categorie Toevoegen" Click="btnCategorieToevoegen_Click"/>
-                    <Label x:Name="lblCategorieën" Content="rood" VerticalContentAlignment="Center"/>
+                    <Label x:Name="lblCategorieën" VerticalContentAlignment="Center"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Name="lblEindDatum" Content="EindDatum:" HorizontalContentAlignment="Right" Width="125"/>
@@ -44,6 +44,6 @@
             </StackPanel>
         </Grid>
 
-        <TextBox x:Name="tbTaakBody" Grid.Row="1" Text="testetstetsetestestsetset" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="20"/>
+        <TextBox x:Name="tbTaakBody" Grid.Row="1" Text="" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="20"/>
     </Grid>
 </Window>
