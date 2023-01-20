@@ -65,6 +65,7 @@ namespace Mailsysteem_WPF
                 }
 
                 mailItemsOntvangen.Remove(bericht);
+                mailItemsVerzonden.Remove(bericht);
 
                 if (!mailItemsVerwijderd.Contains(bericht))
                     mailItemsVerwijderd.Add(bericht);
@@ -107,11 +108,17 @@ namespace Mailsysteem_WPF
         private void btnVezondenItems_Click(object sender, RoutedEventArgs e)
         {
             lbMailItems.DataContext = mailItemsVerzonden;
+            lbMailItems.SelectedIndex = 0;
+            lbMailItems.UpdateLayout();
+            lbMailItems.Focus();
         }
 
         private void btnInbox_Click(object sender, RoutedEventArgs e)
         {
             lbMailItems.DataContext = mailItemsOntvangen;
+            lbMailItems.SelectedIndex = 0;
+            lbMailItems.UpdateLayout();
+            lbMailItems.Focus();
         }
 
         private void btnNieuweMail_Click(object sender, RoutedEventArgs e)
@@ -196,6 +203,10 @@ namespace Mailsysteem_WPF
                         mailItemsOntvangen.Add(x);
                 }
             });
+
+            lbMailItems.SelectedIndex = 0;
+            lbMailItems.UpdateLayout();
+            lbMailItems.Focus();
         }
 
         private void btnTaken_Click(object sender, RoutedEventArgs e)
@@ -223,6 +234,9 @@ namespace Mailsysteem_WPF
         private void btnVerwijderd_Click(object sender, RoutedEventArgs e)
         {
             lbMailItems.DataContext = mailItemsVerwijderd;
+            lbMailItems.SelectedIndex = 0;
+            lbMailItems.UpdateLayout();
+            lbMailItems.Focus();
         }
     }
 }
